@@ -1,0 +1,56 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.welcomecontainer{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 95vh;
+  box-shadow: 0px 1px 4px rgb(130, 130, 130);
+  flex-direction: column;
+  font-size: 21px;
+
+  background: url('/grid.jpg');
+  background-size: cover;
+  background-position: center;
+
+}
+.splat{
+  position: absolute;
+  z-index: 0
+}
+.searchbarcontainer{
+  width: 100%;
+  height: 40px;
+  border: solid 1px  rgb(130, 130, 130);
+  border-radius: 100px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+.welcomecontainer h4{
+  z-index: 99;
+  text-align: center;
+  color: white;
+  font-weight: lighter;
+  font-size: 21px;
+}
+.welcomecontainer h2{
+  text-align: center;
+  font-weight: lighter;
+  margin-bottom: 10px;
+  font-size: 50px;
+  z-index: 99;
+  color: white
+}
+.commstitle{
+  padding: 10%;
+  padding-top: 50px;
+  padding-bottom: 30px;
+}
+.commstitle h4{
+  font-weight: normal;
+  font-size: 21px;
+}

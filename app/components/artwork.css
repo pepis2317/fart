@@ -1,0 +1,49 @@
+
+.awwrapper{
+    background-color: rgb(229, 229, 229);
+    position: relative;
+    box-shadow: 0px 2px 3px rgb(130, 130, 130);
+    display: flex;
+    justify-content: end;
+    width: 250px;
+    height: 300px;
+    border-radius: 5px;
+    flex-direction: column;
+    overflow: hidden;
+    background: url(https://picsum.photos/300/300);
+}
+.awwrapper:hover{
+    cursor: pointer;
+}
+.awtext{
+    position: absolute;
+    z-index: 100;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.awbottom{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 8px;
+    background-color: black;
+    color: white;
+    height: 20%;
+    width: 100%;
+}
+.awbottom h4{
+    font-weight: normal;
+}
+.awbottom h5{
+    font-weight: normal;
+    font-size: 10px;
+}
