@@ -1,14 +1,22 @@
 "use client"
 
 import { signOut, useSession } from "next-auth/react"
+
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 export default function Rightnav() {
     const { status, data: session } = useSession()
+    const router = useRouter()
     if (status == "authenticated") {
         return (
             <div className="rightnav">
-                <button className="logoutbutton" onClick={()=>signOut()}>
+                <button className="logoutbutton" onClick={()=>{
+                    signOut({
+                        callbackUrl:'/'
+                    })
+                }}>
                     <p>Logout</p>
                     </button>
             </div>

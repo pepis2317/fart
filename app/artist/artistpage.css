@@ -1,0 +1,24 @@
+.portfoliotop{
+    padding: 10%;
+    padding-bottom: 25px;
+    padding-top: 50px;
+}
+.portfoliotop h4{
+    font-size: 21px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+.portfoliotop button{
+    color: white;
+    padding: 10px;
+    border: none;
+    background-color: black;
+    font-size: 16px;
+}
+.portfoliotop button:hover{
+    cursor:pointer;
+}
+.portfoliobanner{
+    height: 40vh;
+    background-color: rgb(187, 187, 187);
+}
