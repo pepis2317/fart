@@ -19,6 +19,41 @@ export default async function Artworks({ UserID }: artworkParams) {
                 </div>
             </div>
             ))}
+            <div className="awwrapper">
+                <div className="awtop"></div>
+                <div className="awbottom">
+                    <h4>filler</h4>
+                    <h5>00/00/00</h5>
+                </div>
+            </div>
+            <div className="awwrapper">
+                <div className="awtop"></div>
+                <div className="awbottom">
+                    <h4>filler</h4>
+                    <h5>00/00/00</h5>
+                </div>
+            </div>
+            <div className="awwrapper">
+                <div className="awtop"></div>
+                <div className="awbottom">
+                    <h4>filler</h4>
+                    <h5>00/00/00</h5>
+                </div>
+            </div>
+            <div className="awwrapper">
+                <div className="awtop"></div>
+                <div className="awbottom">
+                    <h4>filler</h4>
+                    <h5>00/00/00</h5>
+                </div>
+            </div>
+            <div className="awwrapper">
+                <div className="awtop"></div>
+                <div className="awbottom">
+                    <h4>filler</h4>
+                    <h5>00/00/00</h5>
+                </div>
+            </div>
         </div>
     )
 }
