@@ -1,3 +1,4 @@
+
 import ArtistCard from "@/app/components/ArtistCard";
 import "./homepage.css";
 import prisma from "@/lib/prisma";
@@ -6,6 +7,7 @@ export default async function Home() {
   const availableArtists = await prisma.msUser.findMany({
     where: { Commissioning: 1 }
   })
+
   return (
     <main>
       <div className="welcomecontainer">

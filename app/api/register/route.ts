@@ -1,3 +1,4 @@
+import { register } from "@/lib/firebase/auth";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -19,13 +20,7 @@ export async function POST(req: Request) {
         if (existingUsername) {
             return NextResponse.json({ User: null, message: "Username registered" }, { status: 401 })
         }
-        const newUser = await prisma.msUser.create({
-            data: {
-                Username: username,
-                UserEmail: email,
-                UserPassword: password
-            }
-        })
+        const newUser = await register(email, password)
         return NextResponse.json({ User: newUser, message: "User inserted to db" }, { status: 201 })
     } catch (error) {
         console.log(error)

@@ -1,8 +1,10 @@
 "use client"
+import { register } from '@/lib/firebase/auth';
 import './form.css'
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase/firebaseConfig';
 export default function RegisterForm(){
     const router = useRouter()
     const [error, setError] = useState<string | null>(null);
@@ -12,22 +14,39 @@ export default function RegisterForm(){
         const username = formData.get('username')?.toString()
         const email = formData.get('email')?.toString()
         const password = formData.get('password')?.toString()
-        const response = await fetch('/api/register',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
+        try{
+            const user = await register(email, password)
+            const registeredUser = {
+                UserID: user.uid,
                 Username: username,
                 UserEmail: email,
-                UserPassword: password
-            })
-        })
-        if(response.ok){
+                UserPfp:"",
+                UserBanner:"",
+                Commissioning:0
+            }
+            const docRef = await addDoc(collection(db, 'users'), registeredUser)
+            console.log('Document written with ID: ', docRef.id);
             router.push('/login')
-        }else{
-            setError('Registration failed')
         }
+        catch(err){
+            console.log(err)
+        }
+        // const response = await fetch('/api/register',{
+        //     method:'POST',
+        //     headers:{
+        //         'Content-Type':'application/json'
+        //     },
+        //     body:JSON.stringify({
+        //         Username: username,
+        //         UserEmail: email,
+        //         UserPassword: password
+        //     })
+        // })
+        // if(response.ok){
+        //     router.push('/login')
+        // }else{
+        //     setError('Registration failed')
+        // }
 
     }
     return (
