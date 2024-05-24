@@ -1,24 +1,44 @@
-.portfoliotop{
-    padding: 10%;
-    padding-bottom: 25px;
-    padding-top: 50px;
-}
-.portfoliotop h4{
-    font-size: 21px;
-    font-weight: normal;
-    margin-bottom: 20px;
-}
-.portfoliotop button{
-    color: white;
-    padding: 10px;
-    border: none;
-    background-color: black;
-    font-size: 16px;
-}
+
+
 .portfoliotop button:hover{
     cursor:pointer;
 }
 .portfoliobanner{
-    height: 40vh;
-    background-color: rgb(187, 187, 187);
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    background: url('/grid.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.portfoliobanner button{
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 16px;
+}
+.portfoliobanner h4{
+    text-align: center;
+    color: white;
+    font-size: 21px;
+    margin-bottom: 20px;
+    font-weight: lighter;
+}
+.awcontainer{
+    width: 100%;
+    position: absolute;
+    padding-top: 50px;
+    padding-left: 8%;
+    padding-right: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);
+    justify-content: center;
+    gap: 10px;
 }
