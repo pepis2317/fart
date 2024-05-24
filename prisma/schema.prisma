@@ -28,3 +28,7 @@ model msUser {
   About         String?     @db.VarChar(200)
   msArtwork     msArtwork[]
 }
+model msAss{
+  assID      String      @id(map: "PK__") @default(cuid()) @db.VarChar(50)
+  
+}

@@ -6,8 +6,9 @@ import { getServerSession, Session } from "next-auth";
 import { authConfig } from "@/lib/auth";
 import { useEffect, useState } from "react";
 import { SessionContext } from "next-auth/react";
-import Navbar from "./components/Navbar";
+
 import { NextAuthProvider } from "./Providers";
+import Navbar from "@/app/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 

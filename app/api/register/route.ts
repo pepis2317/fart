@@ -28,6 +28,6 @@ export async function POST(req: Request) {
         })
         return NextResponse.json({ User: newUser, message: "User inserted to db" }, { status: 201 })
     } catch (error) {
-
+        console.log(error)
     }
 }
