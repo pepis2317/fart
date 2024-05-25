@@ -9,7 +9,6 @@ export default function Artwork({ title, date, url }: any) {
     const imageRef = ref(storage, url)
     useEffect(() => {
         const test = async () => {
-            console.log(imageRef.fullPath)
             const imageDownloadURL = await getDownloadURL(imageRef)
             setImageURL(imageDownloadURL)
         }

@@ -18,10 +18,10 @@ export default function ArtistCards() {
             setArtists(artistList);
         };
         fetchArtists();
-    }, []);
+    });
     return (
         <div className="accontainer">
-            {artists.map((a) => {
+            {artists.map((a:any) => {
                 return (
                     <ArtistCard UserID={a.UserID} Username={a.Username} banner={a.UserBanner} pfp={a.UserPfp} email={a.UserEmail}/>
                 )

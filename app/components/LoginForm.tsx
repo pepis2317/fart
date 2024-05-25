@@ -5,9 +5,34 @@ import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import './form.css'
 import { signIn } from 'next-auth/react'
+import { db, storage } from '@/lib/firebase/firebaseConfig';
+import { query, collection, where, getDocs } from "firebase/firestore";
+type User={
+    UserID: string,
+    Commissioning: boolean,
+    UserBanner: string,
+    UserEmail: string,
+    UserPfp: string,
+    Username: string
+}
+
 export default function LoginForm() {
     const router = useRouter()
     const [error, setError] = useState<string | null>(null);
+    async function saveUserData(email: string|undefined){
+        try {
+            const q = query(collection(db, "users"), where("UserEmail", "==", email));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                const userData = querySnapshot.docs[0].data() as User;
+                userData.UserID = querySnapshot.docs[0].id
+                localStorage.setItem('loggedUser', JSON.stringify(userData))
+            }
+        } catch (error) {
+            console.error("Error fetching user data: ", error);
+        }
+    }
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
@@ -18,7 +43,7 @@ export default function LoginForm() {
             password: password,
             redirect: false,
         });
-
+        saveUserData(email)
         if (signInResponse && !signInResponse.error) {
             router.push('/')
         } else {

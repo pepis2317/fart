@@ -15,14 +15,13 @@ export default function Artworks({UserID}:{UserID:string}) {
                 ArtworkID: doc.id,
                 ...doc.data()
             }));
-            console.log(artworksList)
             setArtworks(artworksList);
         };
         fetchArtworks();
-    },[]);
+    });
     return (
         <div className="awcontainer">
-            {artworks.map((artwork) => (
+            {artworks.map((artwork:any) => (
                 <Artwork key={artwork.ArtworkID} title={artwork.ArtworkTitle} date={artwork.ArtworkDate.toDate()} url={artwork.ArtworkImage} />
             ))}
 
