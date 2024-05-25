@@ -1,13 +1,14 @@
-
 import ArtistCard from "@/app/components/ArtistCard";
 import "./homepage.css";
 import prisma from "@/lib/prisma";
+import { db } from '@/lib/firebase/firebaseConfig';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { useEffect } from "react";
+import ArtistCards from "./components/ArtistCards";
+
 
 export default async function Home() {
-  const availableArtists = await prisma.msUser.findMany({
-    where: { Commissioning: 1 }
-  })
-
+  
   return (
     <main>
       <div className="welcomecontainer">
@@ -21,10 +22,7 @@ export default async function Home() {
             <h4>Commissionning Artists</h4>
             <div className="line" />
           </div>
-          <div className="accontainer">
-            {availableArtists.map((a) => (<ArtistCard UserID={a.UserID} Username={a.Username} banner={a.UserBanner} pfp={a.UserPfp}/>))}
-          </div>
-
+          <ArtistCards/>
         </div>
       </div>
       <h1 style={{ paddingTop: 1000 }}>ass</h1>

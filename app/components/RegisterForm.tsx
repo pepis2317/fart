@@ -15,14 +15,13 @@ export default function RegisterForm(){
         const email = formData.get('email')?.toString()
         const password = formData.get('password')?.toString()
         try{
-            const user = await register(email, password)
+            await register(email, password)
             const registeredUser = {
-                UserID: user.uid,
                 Username: username,
                 UserEmail: email,
                 UserPfp:"",
                 UserBanner:"",
-                Commissioning:0
+                Commissioning:false
             }
             const docRef = await addDoc(collection(db, 'users'), registeredUser)
             console.log('Document written with ID: ', docRef.id);

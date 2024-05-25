@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { getServerSession, Session } from "next-auth";
-import { authConfig } from "@/lib/auth";
-import { useEffect, useState } from "react";
-import { SessionContext } from "next-auth/react";
-
 import { NextAuthProvider } from "./Providers";
 import Navbar from "@/app/components/Navbar";
 
@@ -22,6 +16,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -31,9 +26,6 @@ export default async function RootLayout({
             {children}
           </div>
         </NextAuthProvider>
-
-
-
       </body>
     </html>
   );
