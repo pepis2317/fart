@@ -4,7 +4,7 @@ import { getServerSession, NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-
+import {login} from "./firebase/auth"
 export const authConfig: NextAuthOptions = {
     providers: [
         CredentialsProvider({
@@ -22,16 +22,15 @@ export const authConfig: NextAuthOptions = {
             },
             async authorize(credentials) {
                 if (!credentials || !credentials.email || !credentials.password) return null
-                const dbUser = await prisma.msUser.findFirst({
-                    where: { UserEmail: credentials.email }
-                })
-                if (dbUser && dbUser.UserPassword == credentials.password) {
-                    const ass = {
-                        name: dbUser.Username,
-                        image: dbUser.UserPfp,
-                        email: dbUser.UserEmail
+                try{
+                    const user = await login(credentials.email, credentials.password)
+                    const loggedUser = {
+                        email: user.email,
                     }
-                    return ass as User;
+                    return loggedUser as User
+                }
+                catch(err){
+                    console.log(err)
                 }
                 return null
             }

@@ -3,22 +3,25 @@
 import { signOut, useSession } from "next-auth/react"
 
 import Link from "next/link"
-import { redirect } from "next/navigation"
-import { useRouter } from "next/navigation"
 
 export default function Rightnav() {
     const { status, data: session } = useSession()
-    const router = useRouter()
+    if(status == "loading"){
+        return null
+    }
     if (status == "authenticated") {
         return (
             <div className="rightnav">
-                <button className="logoutbutton" onClick={()=>{
+                <Link className="topnavlink" href={"/personalPortfolio"}>Your Page</Link>
+                <button className="logoutbutton" onClick={() => {
+                    localStorage.removeItem('loggedUser')
                     signOut({
-                        callbackUrl:'/'
+                        callbackUrl: '/'
                     })
                 }}>
                     <p>Logout</p>
-                    </button>
+                </button>
+                
             </div>
         )
     }

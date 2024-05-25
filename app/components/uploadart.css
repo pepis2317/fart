@@ -1,0 +1,43 @@
+.uploadcontainer {
+    width: 80vw;
+    margin-top: 50px;
+    margin-bottom: 0;
+    background-color: white;
+    box-shadow: 0px 1px 4px rgb(130, 130, 130);
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+}
+.uploadwrapper{
+    display: flex;
+    justify-content: center;
+}
+h5{
+    margin-top: 15px;
+    font-weight:normal;
+}
+.uploadwrapper input[type=text] {
+    padding: 8px;
+    margin: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    border: none;
+    border-bottom: solid 1px black;
+}
+
+.uploadwrapper input [type="file"] {
+    padding: 20px;
+}
+
+
+.uploadwrapper button {
+    width: fit-content;
+    padding-right: 10px;
+    color: white;
+    padding: 10px;
+    border: none;
+    background-color: black;
+    margin-top: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
