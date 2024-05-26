@@ -1,11 +1,12 @@
 'use client'
-import Artworks from '../components/Artworks'
+import Artworks from '../components/Artwork/Artworks'
 import './personalPortfolio.css'
 import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
-import UploadArt from '../components/UploadArt'
+
 import { useSession } from 'next-auth/react'
+import UploadArt from '../components/UploadArt/UploadArt'
 
 
 

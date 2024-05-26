@@ -1,10 +1,6 @@
-import ArtistCard from "@/app/components/ArtistCard";
+
 import "./homepage.css";
-import prisma from "@/lib/prisma";
-import { db } from '@/lib/firebase/firebaseConfig';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
-import ArtistCards from "./components/ArtistCards";
+import ArtistCards from "./components/ArtistCard/ArtistCards";
 
 
 export default async function Home() {
