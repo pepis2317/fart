@@ -3,12 +3,14 @@ import './usersettings.css'
 import { useEffect, useReducer, useState } from "react"
 import { v4 } from "uuid"
 import getImageDownloadURL from "@/app/api/getImageDownloadURL"
-export default function UserSettings({ UserEmail }: any) {
+export default function UserSettings({ UserEmail, UserBanner, UserPfp}: any) {
     const [user, setUser] = useState<any>(null)
     const [Username, setUsername] = useState("")
     const [Comms, setComms] = useState(false)
     const [BannerFile, setBannerFile] = useState<any | null>(null)
     const [PfpFile, setPfpFile] = useState<any | null>(null)
+    const [BannerURL, setBannerURL]= useState("")
+    const [PfpURL, setPfpURL] = useState("")
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -20,13 +22,15 @@ export default function UserSettings({ UserEmail }: any) {
                 const userData = await response.json();
                 setComms(userData.Commissioning)
                 setUsername(userData.Username)
+                setPfpURL( await getImageDownloadURL(userData.UserPfp))
+                setBannerURL( await getImageDownloadURL(userData.UserBanner))
                 setUser(userData);
             } catch (err) {
                 console.error('Failed to fetch user:', err);
             }
         };
         fetchUser();
-    }, []);
+    }, [UserEmail]);
     const uploadImage = async (file: any | null, name: any, folder: any) => {
         const reader = new FileReader()
         reader.readAsDataURL(file)
@@ -56,16 +60,19 @@ export default function UserSettings({ UserEmail }: any) {
         }
     }
     const handleSaveChanges = async () => {
-        let bannerName = user.UserBanner
-        let pfpName = user.UserPfp
+        var bannerName = BannerURL
+        let pfpName = PfpURL
         if (BannerFile && BannerFile.name) {
-            bannerName = v4() + BannerFile.name
+            bannerName =v4() + BannerFile.name
             await uploadImage(BannerFile, bannerName, 'banners/')
+            bannerName ='banners/'+bannerName
+
         }
-        if(PfpFile && PfpFile.name){
+        if (PfpFile && PfpFile.name) {
             pfpName = v4() + PfpFile.name
             await uploadImage(PfpFile, pfpName, 'profilePictures/')
-        }  
+            pfpName = 'profilePictures/'+pfpName
+        }
         try {
             const response = await fetch(`/api/editProfile/${user.UserID}`, {
                 method: 'PUT',
@@ -73,8 +80,8 @@ export default function UserSettings({ UserEmail }: any) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    UserPfp: 'profilePictures/' + pfpName,
-                    UserBanner: 'banners/' + bannerName,
+                    UserPfp: pfpName,
+                    UserBanner: bannerName,
                     Username: Username,
                     Commissioning: Comms,
                 }),
@@ -82,8 +89,9 @@ export default function UserSettings({ UserEmail }: any) {
 
             const data = await response.json();
             if (!data.ok) {
-                console.log("fuck smth went wrong")
+                console.error("fuck smth went wrong")
             }
+
         } catch (error) {
             console.error('Error updating user profile:', error);
         }
@@ -93,13 +101,14 @@ export default function UserSettings({ UserEmail }: any) {
     }
     return (
         <div className="settingswrapper">
+
             <div className="settingscontainer">
                 <div className="leftsettings">
                     <div className="pfp">
-                        {user.UserPfp == '' ? <></> : <Image loader={() => user.UserPfp} src={user.UserPfp} alt={""} layout='fill' objectFit="cover" />}
+                        {PfpURL == '' ? <></> : <Image loader={() => PfpURL} src={PfpURL} alt={""} layout='fill' objectFit="cover" />}
                     </div>
                     <div className="banner">
-                        {user.UserBanner == '' ? <></> : <Image loader={() => user.UserBanner} src={user.UserBanner} alt={""} layout='fill' objectFit="cover" />}
+                        {BannerURL == '' ? <></> : <Image loader={() => BannerURL} src={BannerURL} alt={""} layout='fill' objectFit="cover" />}
                     </div>
                 </div>
                 <div className="rightsettings">
@@ -124,4 +133,8 @@ export default function UserSettings({ UserEmail }: any) {
             </div>
         </div>
     )
+}
+
+function StorageReference(UserBanner: any) {
+    throw new Error("Function not implemented.")
 }

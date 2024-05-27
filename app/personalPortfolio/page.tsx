@@ -36,7 +36,7 @@ export default function PersonalPortfolio() {
                 <h4>Hello {user?.UserEmail}</h4>
                 <button>Open User Settings</button>
             </div>
-            <UserSettings UserEmail={user?.UserEmail} />
+            <UserSettings UserEmail={user?.UserEmail} UserBanner={user?.UserBanner} UserPfp={user?.UserPfp}/>
             <UploadArt UserID={user?.UserID} />
             {user && user.UserID ? <Artworks UserID={user.UserID} /> : <></>}
         </main>

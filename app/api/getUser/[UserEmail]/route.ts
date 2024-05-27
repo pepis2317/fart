@@ -16,20 +16,11 @@ export async function GET(request: Request, context: any) {
         let userData = {};
         const userPromises = querySnapshot.docs.map(async (doc) => {
             const data = doc.data();
-            let pfpURL = '';
-            let bannerURL = '';
-
-            if (data.UserPfp) {
-                pfpURL = await getImageDownloadURL(data.UserPfp);
-            }
-            if (data.UserBanner) {
-                bannerURL = await getImageDownloadURL(data.UserBanner);
-            }
 
             return {
                 UserID: doc.id,
-                UserPfp: pfpURL,
-                UserBanner: bannerURL,
+                UserPfp: data.UserPfp,
+                UserBanner: data.UserBanner,
                 UserEmail: data.UserEmail,
                 Commissioning: data.Commissioning,
                 Username: data.Username
