@@ -1,10 +1,7 @@
 'use client'
 import './uploadart.css'
 import { useRef, useState } from "react";
-import { db, storage } from '@/lib/firebase/firebaseConfig';
-import { ref, uploadBytes } from "firebase/storage"
 import { v4 } from "uuid"
-import { collection, addDoc, Timestamp } from "firebase/firestore";
 export default function UploadArt({ UserID }: any) {
     const [imageUpload, setImageUpload] = useState<any | null>(null)
     const [title, setTitle] = useState("")
@@ -19,27 +16,59 @@ export default function UploadArt({ UserID }: any) {
             setWarnText("Title and Description Empty")
             return;
         }
-        const imageName = `${v4()}${imageUpload.name}`;
-        const imageRef = ref(storage, `artworks/${imageName}`);
-        try {
-            await uploadBytes(imageRef, imageUpload);
-            const data = {
-                ArtworkDate: Timestamp.now(),
-                ArtworkDescription: description,
-                ArtworkImage: `artworks/${imageName}`,
-                ArtworkTitle: title,
-                UserID: UserID,
-            };
-
-            const docRef = await addDoc(collection(db, 'artworks'), data);
-            console.log('Document written with ID: ', docRef.id);
-            fileInputRef.current.value = null;
-            titleInputRef.current.value = '';
-            descriptionInputRef.current.value = '';
-            setWarnText("Image Uploaded Successfully")
-        } catch (error) {
-            console.error('Error uploading image or adding document: ', error);
+        const reader = new FileReader()
+        const imageName = v4() + imageUpload.name
+        reader.readAsDataURL(imageUpload)
+        reader.onloadend = async () => {
+            try {
+                const imageRes = await fetch('/api/postImage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        imageUpload: {
+                            folder: 'artworks',
+                            name: imageName,
+                            data: reader.result.split(',')[1]
+                        }
+                    })
+                })
+                if (!imageRes.ok) {
+                    throw new Error('Failed to upload image');
+                }
+                const imageRespone = await imageRes.json()
+                console.log('Image uploaded', imageRespone)
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+            try {
+                const artworkDataRes = await fetch('/api/postArtworkData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        UserID,
+                        imageName: imageName
+                    })
+                })
+                if (!artworkDataRes.ok) {
+                    throw new Error('Failed to upload artwork data')
+                }
+                const artworkDataResponse = await artworkDataRes.json()
+                console.log('Artwork data uploaded', artworkDataResponse)
+                setWarnText("Image Uploaded Successfully")
+            }
+            catch (error) {
+                console.error('Error uploading artwork data:', error);
+            }
         }
+        fileInputRef.current.value = null;
+        titleInputRef.current.value = '';
+        descriptionInputRef.current.value = '';
     }
     return (
         <div className="uploadwrapper">

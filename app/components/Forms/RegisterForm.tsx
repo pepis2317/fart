@@ -19,8 +19,8 @@ export default function RegisterForm(){
             const registeredUser = {
                 Username: username,
                 UserEmail: email,
-                UserPfp:"",
-                UserBanner:"",
+                UserPfp:"profilePictures/default.jpg",
+                UserBanner:"banners/blank.jpg",
                 Commissioning:false
             }
             const docRef = await addDoc(collection(db, 'users'), registeredUser)
@@ -30,22 +30,6 @@ export default function RegisterForm(){
         catch(err){
             console.log(err)
         }
-        // const response = await fetch('/api/register',{
-        //     method:'POST',
-        //     headers:{
-        //         'Content-Type':'application/json'
-        //     },
-        //     body:JSON.stringify({
-        //         Username: username,
-        //         UserEmail: email,
-        //         UserPassword: password
-        //     })
-        // })
-        // if(response.ok){
-        //     router.push('/login')
-        // }else{
-        //     setError('Registration failed')
-        // }
 
     }
     return (

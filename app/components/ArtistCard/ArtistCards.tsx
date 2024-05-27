@@ -19,7 +19,7 @@ export default function ArtistCards() {
             }
         };
         fetchArtists();
-    });
+    },[]);
     return (
         <div className="accontainer">
             {artists.map((a:any) => {

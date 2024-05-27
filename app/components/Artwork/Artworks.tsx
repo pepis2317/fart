@@ -5,7 +5,7 @@ import { query, collection, where, getDocs, Timestamp } from "firebase/firestore
 import Artwork from './Artwork';
 
 export default function Artworks({ UserID }: { UserID: string }) {
-    const [artworks, setArtworks] = useState<any>([]);
+    const [artworks, setArtworks] = useState([]);
     useEffect(() => {
         const fetchArtists = async () => {
             try {
@@ -18,14 +18,21 @@ export default function Artworks({ UserID }: { UserID: string }) {
             }
         };
         fetchArtists();
-    });
+    }, []);
     return (
         <div className="awcontainer">
-            {artworks.map((artwork: any) =>  (
-                    <Artwork key={artwork.ArtworkID} title={artwork.ArtworkTitle} date={artwork.ArtworkDate} image={artwork.ArtworkImage} />
-                )
+            {artworks.length > 0 ? (
+                artworks.map((artwork:any) => (
+                    <Artwork
+                        key={artwork.ArtworkID}
+                        title={artwork.ArtworkTitle}
+                        date={artwork.ArtworkDate}
+                        image={artwork.ArtworkImage}
+                    />
+                ))
+            ) : (
+                <p>No artworks found.</p>
             )}
-
         </div>
     )
 }

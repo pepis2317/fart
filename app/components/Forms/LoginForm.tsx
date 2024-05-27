@@ -27,6 +27,7 @@ export default function LoginForm() {
             if (!querySnapshot.empty) {
                 const userData = querySnapshot.docs[0].data() as User;
                 userData.UserID = querySnapshot.docs[0].id
+                console.log(userData)
                 localStorage.setItem('loggedUser', JSON.stringify(userData))
             }
         } catch (error) {
