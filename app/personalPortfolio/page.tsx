@@ -16,7 +16,6 @@ export default function PersonalPortfolio() {
     const { data: session, status } = useSession()
     const router = useRouter()
     const [user, setUser] = useState<any>()
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const savedUser = localStorage.getItem('loggedUser')
@@ -24,19 +23,17 @@ export default function PersonalPortfolio() {
             router.push('/login')
         }
         if (!savedUser) {
-            setLoading(false)
             router.push('/login')
             return
         }
         setUser(JSON.parse(savedUser))
-    }, []);
+    },[]);
     return (
         <main>
             <div className="portfoliobanner">
-                <h4>Hello {user?.UserEmail}</h4>
-                <button>Open User Settings</button>
+                <h4>Welcome to your portfolio page</h4>
             </div>
-            <UserSettings UserEmail={user?.UserEmail} UserBanner={user?.UserBanner} UserPfp={user?.UserPfp}/>
+            <UserSettings UserEmail={user?.UserEmail}/>
             <UploadArt UserID={user?.UserID} />
             {user && user.UserID ? <Artworks UserID={user.UserID} /> : <></>}
         </main>

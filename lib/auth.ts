@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import {login} from "./firebase/auth"
+
 export const authConfig: NextAuthOptions = {
     secret: process.env.AUTH_SECRET,
     providers: [

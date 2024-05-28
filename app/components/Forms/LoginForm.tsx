@@ -1,13 +1,13 @@
 'use client'
 
-import {login} from '@/lib/firebase/auth'
+import { login } from '@/lib/firebase/auth'
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
 import './form.css'
 import { signIn } from 'next-auth/react'
 import { db, storage } from '@/lib/firebase/firebaseConfig';
 import { query, collection, where, getDocs } from "firebase/firestore";
-type User={
+type User = {
     UserID: string,
     Commissioning: boolean,
     UserBanner: string,
@@ -19,17 +19,22 @@ type User={
 export default function LoginForm() {
     const router = useRouter()
     const [error, setError] = useState<string | null>(null);
-    async function saveUserData(email: string|undefined){
+    async function saveUserData(email: string | undefined) {
         try {
-            const q = query(collection(db, "users"), where("UserEmail", "==", email));
-            const querySnapshot = await getDocs(q);
-
-            if (!querySnapshot.empty) {
-                const userData = querySnapshot.docs[0].data() as User;
-                userData.UserID = querySnapshot.docs[0].id
-                console.log(userData)
-                localStorage.setItem('loggedUser', JSON.stringify(userData))
+            const response = await fetch(`/api/getUser/${email}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            const userData = await response.json();
+            localStorage.setItem('loggedUser', JSON.stringify(userData))
+            // const q = query(collection(db, "users"), where("UserEmail", "==", email));
+            // const querySnapshot = await getDocs(q);
+
+            // if (!querySnapshot.empty) {
+            //     const userData = querySnapshot.docs[0].data() as User;
+            //     userData.UserID = querySnapshot.docs[0].id
+            //     localStorage.setItem('loggedUser', JSON.stringify(userData))
+            // }
         } catch (error) {
             console.error("Error fetching user data: ", error);
         }
@@ -54,8 +59,8 @@ export default function LoginForm() {
     }
     return (
         <form onSubmit={handleSubmit}>
-            <input type="email" name="email" placeholder="Email" required/>
-            <input type="password" name="password" placeholder="Password" required/>
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
             <button type="submit">Login</button>
             <h1>{error}</h1>
         </form>

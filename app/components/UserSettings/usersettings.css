@@ -1,14 +1,16 @@
-.settingscontainer{
+.settingscontainer {
     display: flex;
     flex-direction: row;
     gap: 20px;
     width: 70vw;
     margin-top: 50px;
 }
-.settingswrapper{
+
+.settingswrapper {
     display: flex;
     justify-content: center;
 }
+
 .pfp {
     z-index: 99;
     background-color: rgb(200, 200, 200);
@@ -22,6 +24,7 @@
     overflow: hidden;
     box-shadow: 0px 2px 5px rgb(0, 0, 0);
 }
+
 .leftsettings {
     background-color: rgb(229, 229, 229);
     box-shadow: 0px 2px 3px rgb(130, 130, 130);
@@ -37,7 +40,9 @@
     overflow: hidden;
     text-decoration: none;
 }
-.rightsettings{
+
+.rightsettings {
+    padding: 20px;
     background-color: white;
     box-shadow: 0px 2px 3px rgb(130, 130, 130);
     width: 80%;
@@ -46,18 +51,61 @@
     flex-direction: column;
     align-items: flex-start;
 }
-.textinput{
+
+.textinput {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+label {
+    font-size: small;
+    font-weight: bold;
+}
+
+.textinput input {
+    padding: 8px;
+    padding-left: 0;
+    margin: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    border: none;
+    border-bottom: solid 1px black;
+    outline: none;
+}
+
+.fileinput {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.fileinput input {
+    padding: 8px;
+    padding-left: 0;
+}
+
+.checkboxinput {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
-.fileinput{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+
+.checkboxinput input {
+    background-color: #ccc;
+    cursor: pointer;
+    transition: .4s;
 }
-.checkboxinput{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.updatebutton{
+    width: fit-content;
+    padding-right: 10px;
+    color: white;
+    padding: 10px;
+    border: none;
+    background-color: black;
+    margin-top: 15px;
+    font-size: 16px;
+    cursor: pointer;
 }

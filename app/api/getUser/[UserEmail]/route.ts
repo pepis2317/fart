@@ -2,7 +2,14 @@ import { db } from "@/lib/firebase/firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import getImageDownloadURL from "../../getImageDownloadURL";
-
+type User={
+    UserID: string,
+    Commissioning: boolean,
+    UserBanner: string,
+    UserEmail: string,
+    UserPfp: string,
+    Username: string
+}
 export async function GET(request: Request, context: any) {
     try {
         const { params } = context;
@@ -12,26 +19,8 @@ export async function GET(request: Request, context: any) {
         if (querySnapshot.empty) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
-
-        let userData = {};
-        const userPromises = querySnapshot.docs.map(async (doc) => {
-            const data = doc.data();
-
-            return {
-                UserID: doc.id,
-                UserPfp: data.UserPfp,
-                UserBanner: data.UserBanner,
-                UserEmail: data.UserEmail,
-                Commissioning: data.Commissioning,
-                Username: data.Username
-            };
-        });
-
-        const users = await Promise.all(userPromises);
-
-        if (users.length > 0) {
-            userData = users[0];  // Assuming you expect a single user, or change accordingly if multiple users
-        }
+        const userData = querySnapshot.docs[0].data() as User;
+        userData.UserID = querySnapshot.docs[0].id
 
         return NextResponse.json(userData, { status: 200 });
     } catch (error) {

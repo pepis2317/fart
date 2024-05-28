@@ -3,14 +3,18 @@ import './usersettings.css'
 import { useEffect, useReducer, useState } from "react"
 import { v4 } from "uuid"
 import getImageDownloadURL from "@/app/api/getImageDownloadURL"
-export default function UserSettings({ UserEmail, UserBanner, UserPfp}: any) {
+import { useRouter } from "next/navigation"
+export default function UserSettings({ UserEmail }: any) {
     const [user, setUser] = useState<any>(null)
     const [Username, setUsername] = useState("")
     const [Comms, setComms] = useState(false)
     const [BannerFile, setBannerFile] = useState<any | null>(null)
     const [PfpFile, setPfpFile] = useState<any | null>(null)
-    const [BannerURL, setBannerURL]= useState("")
+    const [BannerURL, setBannerURL] = useState("")
     const [PfpURL, setPfpURL] = useState("")
+    const [BannerPath, setBannerPath] = useState("")
+    const [PfpPath, setPfpPath] = useState("")
+    const router = useRouter()
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -20,11 +24,15 @@ export default function UserSettings({ UserEmail, UserBanner, UserPfp}: any) {
                     throw new Error('Network response was not ok');
                 }
                 const userData = await response.json();
+                console.log(UserEmail)
                 setComms(userData.Commissioning)
                 setUsername(userData.Username)
-                setPfpURL( await getImageDownloadURL(userData.UserPfp))
-                setBannerURL( await getImageDownloadURL(userData.UserBanner))
+                setPfpURL(await getImageDownloadURL(userData.UserPfp))
+                setBannerURL(await getImageDownloadURL(userData.UserBanner))
+                setBannerPath(userData.UserBanner)
+                setPfpPath(userData.UserPfp)
                 setUser(userData);
+
             } catch (err) {
                 console.error('Failed to fetch user:', err);
             }
@@ -60,18 +68,18 @@ export default function UserSettings({ UserEmail, UserBanner, UserPfp}: any) {
         }
     }
     const handleSaveChanges = async () => {
-        var bannerName = BannerURL
-        let pfpName = PfpURL
+        var bannerName = BannerPath
+        let pfpName = PfpPath
         if (BannerFile && BannerFile.name) {
-            bannerName =v4() + BannerFile.name
+            bannerName = v4() + BannerFile.name
             await uploadImage(BannerFile, bannerName, 'banners/')
-            bannerName ='banners/'+bannerName
+            bannerName = 'banners/' + bannerName
 
         }
         if (PfpFile && PfpFile.name) {
             pfpName = v4() + PfpFile.name
             await uploadImage(PfpFile, pfpName, 'profilePictures/')
-            pfpName = 'profilePictures/'+pfpName
+            pfpName = 'profilePictures/' + pfpName
         }
         try {
             const response = await fetch(`/api/editProfile/${user.UserID}`, {
@@ -87,11 +95,8 @@ export default function UserSettings({ UserEmail, UserBanner, UserPfp}: any) {
                 }),
             });
 
-            const data = await response.json();
-            if (!data.ok) {
-                console.error("fuck smth went wrong")
-            }
-
+            await response.json();
+            location.reload()
         } catch (error) {
             console.error('Error updating user profile:', error);
         }
@@ -128,7 +133,7 @@ export default function UserSettings({ UserEmail, UserBanner, UserPfp}: any) {
                         <label>Commissioning</label>
                         <input type="checkbox" checked={Comms} onChange={(e) => setComms(e.target.checked)} />
                     </div>
-                    <button onClick={() => handleSaveChanges()}>Save Changes</button>
+                    <button className="updatebutton"onClick={() => handleSaveChanges()}>Save Changes</button>
                 </div>
             </div>
         </div>

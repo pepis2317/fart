@@ -17,12 +17,15 @@ h5{
     font-weight:normal;
 }
 .uploadwrapper input[type=text] {
+    
     padding: 8px;
+    padding-left: 0px;
     margin: 5px;
     margin-left: 0;
     margin-right: 0;
     border: none;
     border-bottom: solid 1px black;
+    outline: none;
 }
 
 .uploadwrapper input [type="file"] {

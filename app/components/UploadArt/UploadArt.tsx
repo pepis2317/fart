@@ -69,6 +69,7 @@ export default function UploadArt({ UserID }: any) {
         fileInputRef.current.value = null;
         titleInputRef.current.value = '';
         descriptionInputRef.current.value = '';
+        
     }
     return (
         <div className="uploadwrapper">
