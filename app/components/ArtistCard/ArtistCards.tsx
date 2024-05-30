@@ -9,16 +9,17 @@ export default function ArtistCards() {
     const [artists, setArtists] = useState<any>([]);
     useEffect(() => {
         const fetchArtists = async () => {
-            const q = query(collection(db, "users"), where("Commissioning", "==", true));
-            const querySnapshot = await getDocs(q);
-            const artistList = querySnapshot.docs.map(doc => ({
-                UserID: doc.id,
-                ...doc.data()
-            }));
-            setArtists(artistList);
+            try{
+                const response = await fetch('/api/getCommissioning')
+                const artistList = await response.json()
+                setArtists(artistList)
+            }
+            catch(err){
+                console.log(err)
+            }
         };
         fetchArtists();
-    });
+    },[]);
     return (
         <div className="accontainer">
             {artists.map((a:any) => {

@@ -1,12 +1,23 @@
 "use client"
-
-import { signOut, useSession } from "next-auth/react"
-
+import { authConfig } from "@/lib/auth";
+import { getServerSession, Session } from "next-auth";
 import Link from "next/link"
+import "./navbar.css"
+import { signOut, useSession } from "next-auth/react";
 
-export default function Rightnav() {
+export default function Navbar() {
+    return (
+        <nav className="topnav">
+            <div className="leftnav">
+                <Link className="homelink" href={"/"}>Fart</Link>
+            </div>
+            <Rightnav />
+        </nav>
+    )
+}
+function Rightnav() {
     const { status, data: session } = useSession()
-    if(status == "loading"){
+    if (status == "loading") {
         return null
     }
     if (status == "authenticated") {
@@ -21,7 +32,7 @@ export default function Rightnav() {
                 }}>
                     <p>Logout</p>
                 </button>
-                
+
             </div>
         )
     }
