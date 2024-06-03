@@ -1,7 +1,6 @@
-import prisma from "@/lib/prisma"
+
 import './artistpage.css'
-import Artwork from "@/app/components/Artwork"
-import Artworks from "../components/Artworks"
+import Artworks from "../components/Artwork/Artworks"
 
 type ArtistPageParams = {
     params: {

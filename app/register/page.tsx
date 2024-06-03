@@ -1,5 +1,6 @@
 
-import RegisterForm from '@/app/components/RegisterForm'
+
+import RegisterForm from '../components/Forms/RegisterForm'
 import './register.css'
 export default function Register() {
     return (
