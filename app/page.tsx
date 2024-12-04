@@ -21,7 +21,7 @@ export default async function Home() {
           <ArtistCards/>
         </div>
       </div>
-      <h1 style={{ paddingTop: 1000 }}>ass</h1>
+      <h1 style={{ paddingTop: 1000 }}>aaa</h1>
     </main>
   );
 }
